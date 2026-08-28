@@ -1,0 +1,30 @@
+# 隐私：不提交任何真人画面与分析结果
+edu_psych_system/uploads/*
+!edu_psych_system/uploads/.gitkeep
+edu_psych_system/db/*
+!edu_psych_system/db/.gitkeep
+*.db
+*.sqlite
+*.sqlite3
+*.mp4
+*.mov
+*.avi
+*.mkv
+
+# 模型权重不入库，用 scripts/download_models.py 获取
+models/
+*.onnx
+
+# 数据集与从真人视频抽出的中间缓存
+experiments/data/
+experiments/results/video_faces.json
+
+__pycache__/
+*.py[cod]
+*.log
+.venv/
+venv/
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>心绪 · 教育心理情绪分析系统</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<style>
+:root{
+  --ink:#1b2340; --ink-2:#5a6480; --line:rgba(24,40,90,.10);
+  --brand:#4f6ef7; --brand-2:#7b5cf0; --cyan:#22c1dc;
+  --ok:#12a67c; --mild:#e08a1e; --warn:#e2554d;
+  --glass:rgba(255,255,255,.72); --radius:18px;
+  --shadow:0 18px 40px -22px rgba(28,44,96,.45);
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;font-family:"Microsoft YaHei","PingFang SC","Noto Sans CJK SC",sans-serif;
+  color:var(--ink);background:#eef2fb;overflow-x:hidden;
+}
+/* ---------- 流动背景 ---------- */
+.flow{position:fixed;inset:0;z-index:-1;overflow:hidden;background:
+  linear-gradient(160deg,#f4f7ff 0%,#eaf0ff 40%,#f6f4ff 100%)}
+.flow i{position:absolute;display:block;border-radius:50%;filter:blur(60px);opacity:.55;
+  animation:drift 22s ease-in-out infinite alternate}
+.flow i:nth-child(1){width:520px;height:520px;left:-120px;top:-140px;
+  background:radial-gradient(circle at 30% 30%,#8ea8ff,#4f6ef7 70%)}
+.flow i:nth-child(2){width:460px;height:460px;right:-100px;top:60px;
+  background:radial-gradient(circle at 30% 30%,#9be8f2,#22c1dc 70%);animation-duration:28s}
+.flow i:nth-child(3){width:600px;height:600px;left:38%;bottom:-260px;
+  background:radial-gradient(circle at 30% 30%,#c9b6ff,#7b5cf0 70%);animation-duration:34s}
+@keyframes drift{
+  0%{transform:translate3d(0,0,0) scale(1)}
+  50%{transform:translate3d(60px,-40px,0) scale(1.12)}
+  100%{transform:translate3d(-40px,50px,0) scale(.95)}
+}
+/* ---------- 布局 ---------- */
+.app{display:grid;grid-template-columns:236px 1fr;min-height:100vh}
+aside{padding:22px 16px;backdrop-filter:blur(14px);background:rgba(255,255,255,.55);
+  border-right:1px solid var(--line);position:sticky;top:0;height:100vh}
+.logo{display:flex;align-items:center;gap:10px;margin:4px 6px 22px}
+.logo .dot{width:34px;height:34px;border-radius:12px;position:relative;
+  background:linear-gradient(135deg,var(--brand),var(--brand-2) 60%,var(--cyan));
+  box-shadow:0 8px 18px -8px rgba(79,110,247,.9)}
+.logo .dot::after{content:"";position:absolute;inset:9px;border-radius:50%;
+  background:#fff;opacity:.9;animation:pulse 2.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{transform:scale(.7);opacity:.55}50%{transform:scale(1);opacity:.95}}
+.logo b{font-size:16px;letter-spacing:.5px;display:block;line-height:1.2}
+.logo span{font-size:11px;color:var(--ink-2)}
+nav a{display:flex;align-items:center;gap:10px;padding:11px 13px;margin:4px 0;border-radius:13px;
+  color:var(--ink-2);text-decoration:none;font-size:14px;cursor:pointer;transition:.28s;position:relative}
+nav a:hover{background:rgba(79,110,247,.09);color:var(--brand);transform:translateX(3px)}
+nav a.on{color:#fff;background:linear-gradient(120deg,var(--brand),var(--brand-2));
+  box-shadow:0 12px 24px -14px rgba(79,110,247,1)}
+nav a em{font-style:normal;width:18px;text-align:center;font-size:15px}
+.sidefoot{position:absolute;bottom:18px;left:16px;right:16px;font-size:11px;color:var(--ink-2);
+  line-height:1.7;border-top:1px solid var(--line);padding-top:12px}
+main{padding:26px 32px 40px;max-width:1320px}
+.topbar{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:20px}
+.topbar h1{margin:0;font-size:23px;letter-spacing:.4px}
+.topbar p{margin:6px 0 0;font-size:12.5px;color:var(--ink-2)}
+.pill{font-size:12px;padding:6px 13px;border-radius:999px;background:rgba(255,255,255,.75);
+  border:1px solid var(--line);color:var(--ink-2);white-space:nowrap}
+.pill b{color:var(--ok)}
+/* ---------- 卡片 ---------- */
+.card{background:var(--glass);backdrop-filter:blur(16px);border:1px solid var(--line);
+  border-radius:var(--radius);padding:18px 20px;box-shadow:var(--shadow);margin-bottom:18px;
+  transition:transform .3s,box-shadow .3s}
+.card:hover{transform:translateY(-2px);box-shadow:0 24px 46px -22px rgba(28,44,96,.5)}
+.card h3{margin:0 0 4px;font-size:15px;display:flex;align-items:center;gap:8px}
+.card h3 i{width:6px;height:16px;border-radius:4px;display:inline-block;
+  background:linear-gradient(180deg,var(--brand),var(--cyan))}
+.card .sub{margin:0 0 14px;font-size:12px;color:var(--ink-2)}
+.grid2{display:grid;grid-template-columns:1.05fr .95fr;gap:18px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}
+.kpi{background:var(--glass);backdrop-filter:blur(16px);border:1px solid var(--line);
+  border-radius:var(--radius);padding:15px 17px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.kpi::after{content:"";position:absolute;right:-30px;top:-30px;width:90px;height:90px;border-radius:50%;
+  background:linear-gradient(135deg,rgba(79,110,247,.18),rgba(34,193,220,.12))}
+.kpi label{font-size:11.5px;color:var(--ink-2)}
+.kpi b{display:block;font-size:26px;margin-top:6px;letter-spacing:.5px;
+  background:linear-gradient(100deg,var(--brand),var(--brand-2));-webkit-background-clip:text;
+  background-clip:text;color:transparent}
+.kpi small{font-size:11px;color:var(--ink-2)}
+/* ---------- 控件 ---------- */
+textarea{width:100%;height:132px;font-size:13.5px;line-height:1.8;padding:12px 14px;color:var(--ink);
+  border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.8);resize:vertical;
+  font-family:inherit;transition:.25s}
+textarea:focus{outline:none;border-color:var(--brand);box-shadow:0 0 0 4px rgba(79,110,247,.13)}
+.btn{border:none;cursor:pointer;font-size:13.5px;padding:10px 20px;border-radius:12px;color:#fff;
+  background:linear-gradient(120deg,var(--brand),var(--brand-2));font-family:inherit;
+  box-shadow:0 12px 22px -14px rgba(79,110,247,1);transition:.25s;position:relative}
+.btn:hover{transform:translateY(-1px);filter:brightness(1.06)}
+.btn:disabled{opacity:.6;cursor:progress;transform:none}
+.btn.ghost{background:rgba(255,255,255,.85);color:var(--brand);border:1px solid rgba(79,110,247,.35);
+  box-shadow:none}
+.row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:12px}
+.chart{height:308px}
+.chart.tall{height:340px}
+.tag{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:999px;font-size:12px;
+  font-weight:bold}
+.tag.warn{background:rgba(226,85,77,.13);color:var(--warn)}
+.tag.mild{background:rgba(224,138,30,.15);color:var(--mild)}
+.tag.ok{background:rgba(18,166,124,.13);color:var(--ok)}
+.tag::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+.reasons{margin:12px 0 0;padding-left:18px;font-size:13px;line-height:1.9;color:var(--ink)}
+.advice{margin:6px 0 0;padding:0;list-style:none;font-size:13px;line-height:1.75}
+.advice li{padding:9px 12px 9px 34px;border-radius:12px;margin-top:8px;position:relative;
+  background:rgba(79,110,247,.07)}
+.advice li::before{content:"→";position:absolute;left:14px;color:var(--brand);font-weight:bold}
+table{width:100%;border-collapse:separate;border-spacing:0 6px;font-size:12.5px}
+th{font-size:11.5px;color:var(--ink-2);font-weight:normal;padding:0 10px 4px;text-align:left}
+td{background:rgba(255,255,255,.72);padding:9px 10px;border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line)}
+td:first-child{border-left:1px solid var(--line);border-radius:11px 0 0 11px}
+td:last-child{border-right:1px solid var(--line);border-radius:0 11px 11px 0}
+.note{font-size:12px;color:var(--ink-2)}
+.banner{display:none;align-items:center;gap:10px;font-size:12.5px;padding:11px 14px;border-radius:13px;
+  background:rgba(224,138,30,.13);color:#8a5510;margin-bottom:14px;border:1px dashed rgba(224,138,30,.5)}
+.banner.show{display:flex}
+/* ---------- 拖拽上传 ---------- */
+.drop{border:1.6px dashed rgba(79,110,247,.45);border-radius:16px;padding:22px;text-align:center;
+  background:rgba(79,110,247,.05);transition:.3s;cursor:pointer}
+.drop:hover,.drop.hot{background:rgba(79,110,247,.11);border-color:var(--brand);transform:scale(1.01)}
+.drop b{display:block;font-size:14px;margin-bottom:4px}
+.drop span{font-size:12px;color:var(--ink-2)}
+.bar{height:6px;border-radius:99px;background:rgba(79,110,247,.15);overflow:hidden;margin-top:12px;display:none}
+.bar.show{display:block}
+.bar i{display:block;height:100%;width:0;border-radius:99px;
+  background:linear-gradient(90deg,var(--brand),var(--cyan));transition:width .2s}
+video{width:100%;border-radius:14px;background:#0d1226;display:block;max-height:330px}
+.stage{position:relative;margin-top:14px}
+.stage canvas{position:absolute;left:0;top:0;pointer-events:none;border-radius:14px}
+.vwrap{display:none}
+.vwrap.show{display:block}
+.live{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.live .chipS{font-size:12px;padding:6px 11px;border-radius:11px;background:rgba(255,255,255,.8);
+  border:1px solid var(--line);transition:.2s}
+.live .chipS b{color:var(--brand)}
+/* ---------- 视图切换动画 ---------- */
+.view{display:none;animation:rise .45s cubic-bezier(.22,.85,.3,1)}
+.view.on{display:block}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.skeleton{height:308px;border-radius:14px;background:linear-gradient(100deg,
+  rgba(79,110,247,.07) 30%,rgba(79,110,247,.16) 50%,rgba(79,110,247,.07) 70%);
+  background-size:220% 100%;animation:sweep 1.3s linear infinite}
+@keyframes sweep{from{background-position:120% 0}to{background-position:-40% 0}}
+@media(max-width:980px){.app{grid-template-columns:1fr}aside{position:static;height:auto}
+  .grid2{grid-template-columns:1fr}.kpis{grid-template-columns:repeat(2,1fr)}main{padding:18px}}
+</style>
+</head>
+<body>
+<div class="flow"><i></i><i></i><i></i></div>
+
+<div class="app">
+<aside>
+  <div class="logo">
+    <span class="dot"></span>
+    <b>心绪 EduMind<span></span></b>
+  </div>
+  <div class="logo" style="margin:-18px 6px 20px"><span style="font-size:11px;color:var(--ink-2)">
+    教育心理情绪分析系统 v1.1</span></div>
+  <nav>
+    <a id="navHome" class="on" onclick="go('Home')"><em>◎</em>概览</a>
+    <a id="navI" onclick="go('I')"><em>❞</em>访谈分析</a>
+    <a id="navC" onclick="go('C')"><em>▷</em>课堂视频</a>
+    <a id="navH" onclick="go('H')"><em>≣</em>分析历史</a>
+  </nav>
+  <div class="sidefoot">
+    本地运行 · 数据不出机<br>界面仅显示匿名编号<br>结果仅供参考，不构成心理评估结论
+  </div>
+</aside>
+
+<main>
+  <div class="topbar">
+    <div>
+      <h1 id="ttl">概览</h1>
+      <p id="sub">课堂 / 访谈视频情绪状态分析，辅助教师关注学生心理</p>
+    </div>
+    <div class="pill">服务状态：<b id="ping">检测中…</b></div>
+  </div>
+
+  <!-- ============ 概览 ============ -->
+  <section class="view on" id="vHome">
+    <div class="kpis">
+      <div class="kpi"><label>累计分析会话</label><b id="kSess">–</b><small>访谈 + 课堂</small></div>
+      <div class="kpi"><label>累计预警记录</label><b id="kAlert">–</b><small>建议关注 / 重点关注</small></div>
+      <div class="kpi"><label>最近一次模式</label><b id="kMode" style="font-size:20px">–</b><small id="kEng">引擎 –</small></div>
+      <div class="kpi"><label>预警阈值</label><b style="font-size:20px">40% / 0.35 / 0.8</b>
+        <small>消极占比 / 波动度 / 骤降</small></div>
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <h3><i></i>两种使用场景</h3>
+        <p class="sub">同一套预警规则与建议引擎，两条分析链路</p>
+        <ul class="advice">
+          <li><b>访谈模式</b>：一对一谈话转写文本 → 逐句情绪时间线 → 关注级别与建议</li>
+          <li><b>课堂模式</b>：上传课堂视频 → 边看边分析，逐人情绪时间线与预警名单</li>
+        </ul>
+        <div class="row">
+          <button class="btn" onclick="go('I')">进入访谈分析</button>
+          <button class="btn ghost" onclick="go('C')">上传课堂视频</button>
+        </div>
+      </div>
+      <div class="card">
+        <h3><i></i>最近分析</h3>
+        <p class="sub">点击「分析历史」查看完整记录</p>
+        <table id="miniHist"><tr><td class="note">暂无记录</td></tr></table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 访谈 ============ -->
+  <section class="view" id="vI">
+    <div class="kpis">
+      <div class="kpi"><label>情绪价值均值</label><b id="iMean">–</b><small>范围 -1 ~ 1</small></div>
+      <div class="kpi"><label>消极语句占比</label><b id="iNeg">–</b><small>阈值 40%</small></div>
+      <div class="kpi"><label>情绪波动度</label><b id="iVol">–</b><small>阈值 0.35</small></div>
+      <div class="kpi"><label>关注级别</label><b id="iLv" style="font-size:20px">–</b><small id="iEng">引擎 –</small></div>
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <h3><i></i>访谈转写文本</h3>
+        <p class="sub">每行一句，可直接粘贴谈话记录</p>
+        <textarea id="turns">最近上课总是走神，作业也跟不上了。
+其实我挺喜欢这门课的，就是压力有点大。
+晚上经常睡不着，一直担心考试。
+不过这周和同学一起复习，感觉好了一些。</textarea>
+        <div class="row">
+          <button class="btn" id="btnI" onclick="runInterview()">开始分析</button>
+          <span class="note" id="engI"></span>
+        </div>
+      </div>
+      <div class="card">
+        <h3><i></i>关注判定与建议</h3>
+        <p class="sub">每条预警都会给出触发原因，便于教师自行判断</p>
+        <div id="alertI"><span class="note">分析后显示</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <h3><i></i>逐句情绪时间线</h3>
+      <p class="sub">鼠标悬停可查看该句原文与情绪价值</p>
+      <div id="chartI" class="chart"></div>
+    </div>
+  </section>
+
+  <!-- ============ 课堂 ============ -->
+  <section class="view" id="vC">
+    <div class="banner" id="noticeC"><b>提示</b><span id="noticeTxt"></span></div>
+    <div class="kpis">
+      <div class="kpi"><label>识别学生数</label><b id="cN">–</b><small id="cSmall">匿名编号</small></div>
+      <div class="kpi"><label>班级整体情绪</label><b id="cMean" style="font-size:20px">–</b>
+        <small id="cMeanNum">均值 –（范围 -1 ~ 1）</small></div>
+      <div class="kpi"><label>消极学生占比</label><b id="cNeg">–</b><small>消极占比超阈值的人数比</small></div>
+      <div class="kpi"><label>触发预警人数</label><b id="cAl">–</b><small id="cEng">引擎 –</small></div>
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <h3><i></i>课堂视频</h3>
+        <p class="sub">支持 mp4 / webm / mov / mkv，视频只在本机处理与播放</p>
+        <div class="drop" id="drop" onclick="document.getElementById('vfile').click()">
+          <b>拖拽视频到此处，或点击选择文件</b>
+          <span id="dropTip">上传后可直接在页面内播放，播放进度与情绪曲线联动</span>
+        </div>
+        <input type="file" id="vfile" accept="video/*" style="display:none" onchange="pick(this.files[0])">
+        <div class="bar" id="bar"><i id="barI"></i></div>
+        <div class="row">
+          <button class="btn" id="btnUp" onclick="upload()" disabled>上传并分析</button>
+          <button class="btn ghost" id="btnDemo" onclick="runDemo()">运行演示分析（模拟数据）</button>
+        </div>
+        <div class="vwrap" id="vwrap">
+          <div class="stage"><video id="player" controls playsinline preload="metadata"></video>
+            <canvas id="ovl"></canvas></div>
+          <p class="sub" style="margin-top:8px">播放时在画面上框出识别到的人脸并标注当前情绪（后排过小的人脸不参与识别，不画框）</p>
+          <div class="live" id="live"></div>
+        </div>
+      </div>
+      <div class="card">
+        <h3><i></i>心理关注预警名单</h3>
+        <p class="sub">仅显示匿名编号；结果仅供参考，不构成心理评估结论</p>
+        <div id="alertC"><span class="note">分析后显示</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <h3><i></i>各学生情绪价值时间线</h3>
+      <p class="sub">播放视频时会有游标随进度移动；点击曲线可让视频跳转到对应时刻</p>
+      <div id="chartC" class="chart tall"></div>
+    </div>
+  </section>
+
+  <!-- ============ 历史 ============ -->
+  <section class="view" id="vH">
+    <div class="card">
+      <h3><i></i>分析历史</h3>
+      <p class="sub">每次分析自动落库（SQLite），含模式、引擎与摘要</p>
+      <div class="row" style="margin-top:0"><button class="btn ghost" onclick="loadHist()">刷新</button></div>
+      <table id="hist"><tr><td class="note">暂无记录</td></tr></table>
+    </div>
+    <div class="card">
+      <h3><i></i>预警记录</h3>
+      <p class="sub">按时间倒序，含触发原因</p>
+      <table id="alertHist"><tr><td class="note">暂无记录</td></tr></table>
+    </div>
+  </section>
+</main>
+</div>
+
+<script>
+const TITLES={Home:['概览','课堂 / 访谈视频情绪状态分析，辅助教师关注学生心理'],
+  I:['访谈分析','单人谈话：逐句情绪时间线与可解释的关注判定'],
+  C:['课堂视频','多人场景：上传视频边看边分析，逐人情绪时间线'],
+  H:['分析历史','所有分析会话与预警记录']};
+let ci=null,cc=null,cData=null,cSecs=[],cMaps=[],vDur=0,rafOn=false;
+
+function go(v){
+  ['Home','I','C','H'].forEach(k=>{
+    document.getElementById('v'+k).classList.toggle('on',k===v);
+    const n=document.getElementById('nav'+(k==='Home'?'Home':k));
+    if(n) n.classList.toggle('on',k===v);
+  });
+  document.getElementById('ttl').innerText=TITLES[v][0];
+  document.getElementById('sub').innerText=TITLES[v][1];
+  if(v==='I'){ci=ci||echarts.init(document.getElementById('chartI'));ci.resize()}
+  if(v==='C'){cc=cc||echarts.init(document.getElementById('chartC'));cc.resize();bindChartSeek()}
+  if(v==='H'||v==='Home') loadHist();
+}
+window.addEventListener('resize',()=>{ci&&ci.resize();cc&&cc.resize()});
+function lvTag(l){return `<span class="tag ${l==='重点关注'?'warn':l==='建议关注'?'mild':'ok'}">${l}</span>`}
+function pct(x){return (x*100).toFixed(0)+'%'}
+
+/* ---------------- 访谈 ---------------- */
+async function runInterview(){
+  const turns=document.getElementById('turns').value.split('\n').filter(s=>s.trim());
+  if(!turns.length){alert('请先输入访谈文本');return}
+  const btn=document.getElementById('btnI');btn.disabled=true;btn.innerText='分析中…';
+  try{
+    const r=await (await fetch('/api/interview',{method:'POST',
+      headers:{'Content-Type':'application/json'},body:JSON.stringify({turns})})).json();
+    if(r.error){alert(r.error);return}
+    const s=r.result.summary||{};
+    document.getElementById('iMean').innerText=(s.mean_valence??0).toFixed(2);
+    document.getElementById('iNeg').innerText=pct(s.neg_ratio||0);
+    document.getElementById('iVol').innerText=(s.volatility||0).toFixed(2);
+    document.getElementById('iLv').innerText=r.alert.level;
+    document.getElementById('iEng').innerText='引擎 '+(r.result.engine||'');
+    document.getElementById('engI').innerText='推理引擎：'+(r.result.engine||'');
+    ci=ci||echarts.init(document.getElementById('chartI'));
+    ci.setOption({grid:{left:52,right:24,top:26,bottom:38},
+      tooltip:{trigger:'axis',formatter:p=>`第 ${p[0].dataIndex+1} 句<br/>${turns[p[0].dataIndex]}<br/>情绪价值 <b>${p[0].value}</b>`},
+      xAxis:{type:'category',boundaryGap:false,data:turns.map((_,i)=>'句'+(i+1)),
+        axisLine:{lineStyle:{color:'#c9d2ea'}},axisLabel:{color:'#5a6480'}},
+      yAxis:{min:-1,max:1,name:'情绪价值',nameTextStyle:{color:'#5a6480'},
+        splitLine:{lineStyle:{color:'rgba(24,40,90,.08)'}},axisLabel:{color:'#5a6480'}},
+      series:[{type:'line',smooth:true,symbolSize:8,
+        data:r.result.timeline.map(x=>+x.valence.toFixed(2)),
+        lineStyle:{width:3,color:'#4f6ef7'},itemStyle:{color:'#7b5cf0'},
+        areaStyle:{color:new echarts.graphic.LinearGradient(0,0,0,1,
+          [{offset:0,color:'rgba(79,110,247,.35)'},{offset:1,color:'rgba(79,110,247,0)'}])},
+        markLine:{silent:true,symbol:'none',data:[{yAxis:0,lineStyle:{color:'#9aa6c4',type:'dashed'}}]}}]},true);
+    const a=r.alert;
+    document.getElementById('alertI').innerHTML=lvTag(a.level)+
+      '<ul class="reasons">'+(a.reasons.length?a.reasons:['各项指标均在阈值内']).map(x=>`<li>${x}</li>`).join('')+'</ul>'+
+      '<ul class="advice">'+r.advice.map(x=>`<li>${x}</li>`).join('')+'</ul>';
+    loadHist();
+  }finally{btn.disabled=false;btn.innerText='开始分析'}
+}
+
+/* ---------------- 课堂 ---------------- */
+let picked=null;
+const drop=document.getElementById('drop');
+['dragenter','dragover'].forEach(e=>drop.addEventListener(e,ev=>{
+  ev.preventDefault();drop.classList.add('hot')}));
+['dragleave','drop'].forEach(e=>drop.addEventListener(e,ev=>{
+  ev.preventDefault();drop.classList.remove('hot')}));
+drop.addEventListener('drop',ev=>{const f=ev.dataTransfer.files[0];if(f)pick(f)});
+function pick(f){
+  if(!f)return;
+  picked=f;
+  document.getElementById('dropTip').innerText=
+    `已选择：${f.name}（${(f.size/1048576).toFixed(1)} MB），点击「上传并分析」开始`;
+  document.getElementById('btnUp').disabled=false;
+  const p=document.getElementById('player');
+  p.src=URL.createObjectURL(f);
+  document.getElementById('vwrap').classList.add('show');
+}
+function upload(){
+  if(!picked){alert('请先选择视频文件');return}
+  const btn=document.getElementById('btnUp');btn.disabled=true;btn.innerText='上传分析中…';
+  const bar=document.getElementById('bar');bar.classList.add('show');
+  const xhr=new XMLHttpRequest();
+  xhr.open('POST','/api/classroom/video?name='+encodeURIComponent(picked.name));
+  xhr.setRequestHeader('Content-Type','application/octet-stream');
+  xhr.setRequestHeader('X-File-Name',encodeURIComponent(picked.name));
+  xhr.upload.onprogress=e=>{if(e.lengthComputable)
+    document.getElementById('barI').style.width=(e.loaded/e.total*100).toFixed(0)+'%'};
+  xhr.onload=()=>{
+    btn.disabled=false;btn.innerText='上传并分析';bar.classList.remove('show');
+    document.getElementById('barI').style.width='0';
+    let r={};try{r=JSON.parse(xhr.responseText)}catch(e){alert('返回解析失败');return}
+    if(r.error&&!r.result){alert(r.error+'\n'+(r.fallback||''));return}
+    if(r.video&&r.video.url){const p=document.getElementById('player');
+      p.src=r.video.url;document.getElementById('vwrap').classList.add('show')}
+    renderClass(r);
+  };
+  xhr.onerror=()=>{btn.disabled=false;btn.innerText='上传并分析';bar.classList.remove('show');
+    alert('上传失败，请检查服务是否运行')};
+  xhr.send(picked);
+}
+async function runDemo(){
+  const btn=document.getElementById('btnDemo');btn.disabled=true;btn.innerText='分析中…';
+  try{renderClass(await (await fetch('/api/classroom/demo')).json())}
+  finally{btn.disabled=false;btn.innerText='运行演示分析（模拟数据）'}
+}
+function renderClass(r){
+  cData=r;
+  const eng=r.result.engine,sim=eng==='simulated';
+  const nt=document.getElementById('noticeC');
+  if(r.notice||sim){nt.classList.add('show');
+    document.getElementById('noticeTxt').innerText=r.notice||
+      '当前为模拟数据，仅供界面联调与演示，不代表真实分析结果。';}
+  else nt.classList.remove('show');
+  const cs=r.result.class_stats||{};
+  document.getElementById('cN').innerText=cs.n_students??'–';
+  document.getElementById('cSmall').innerText=cs.small_face_samples
+    ?'匿名编号；另有 '+cs.small_face_samples+' 次人脸过小未参与识别'
+    :'匿名编号';
+  document.getElementById('cMean').innerText=
+    moodText({emotion:'中性',valence:cs.class_valence||0});
+  document.getElementById('cMeanNum').innerText=
+    '均值 '+(cs.class_valence??0).toFixed(2)+'（范围 -1 ~ 1）';
+  document.getElementById('cNeg').innerText=pct(cs.neg_student_ratio||0);
+  document.getElementById('cAl').innerText=(r.alerts||[]).length;
+  document.getElementById('cEng').innerText='引擎 '+eng+(sim?'（模拟）':'');
+  cc=cc||echarts.init(document.getElementById('chartC'));
+  /* 各人被检测到的时刻不一定相同，统一到同一条时间轴上，缺的点留空 */
+  cSecs=[...new Set(r.result.students.flatMap(s=>s.timeline.map(x=>x.t)))].sort((a,b)=>a-b);
+  cMaps=r.result.students.map(s=>new Map(s.timeline.map(x=>[x.t,x])));
+  const secs=cSecs;
+  cc.setOption({grid:{left:52,right:24,top:38,bottom:44},
+    tooltip:{trigger:'axis',formatter:ps=>{
+      const t=secs[ps[0].dataIndex];
+      return `第 ${t}s<br/>`+ps.map(q=>{
+        const p=cMaps[q.seriesIndex].get(t);
+        return q.marker+q.seriesName+' '+(p?moodText(p):'未检测到');
+      }).join('<br/>');
+    }},legend:{top:0,textStyle:{color:'#5a6480',fontSize:11}},
+    xAxis:{type:'category',boundaryGap:false,data:secs.map(t=>t+'s'),
+      axisLine:{lineStyle:{color:'#c9d2ea'}},axisLabel:{color:'#5a6480'}},
+    yAxis:{min:v=>Math.min(-0.25,+(v.min-0.05).toFixed(2)),
+      max:v=>Math.max(0.25,+(v.max+0.05).toFixed(2)),
+      name:'情绪价值',nameTextStyle:{color:'#5a6480'},
+      splitLine:{lineStyle:{color:'rgba(24,40,90,.08)'}},axisLabel:{color:'#5a6480'}},
+    series:r.result.students.map((s,i)=>({name:'学生#'+s.track_id,type:'line',showSymbol:false,
+      smooth:true,sampling:'lttb',lineStyle:{width:2},connectNulls:true,
+      data:secs.map(t=>cMaps[i].has(t)?cMaps[i].get(t).valence:null)}))},true);
+  bindChartSeek();
+  const al=r.alerts||[];
+  let html=al.length?'<table><tr><th>学生</th><th>级别</th><th>触发原因</th></tr>'+
+    al.map(a=>`<tr><td>学生#${a.track_id}</td><td>${lvTag(a.level)}</td>
+      <td>${a.reasons.join('；')}</td></tr>`).join('')+'</table>'
+    :'<span class="tag ok">本次没有学生触发预警</span>';
+  html+='<ul class="advice">'+(r.advice||[]).map(x=>`<li>${x}</li>`).join('')+'</ul>';
+  document.getElementById('alertC').innerHTML=html;
+  syncLive(0);
+  loadHist();
+}
+/* 播放进度 ↔ 曲线游标 */
+const player=document.getElementById('player');
+player.addEventListener('play',()=>{if(!rafOn){rafOn=true;tick()}});
+player.addEventListener('pause',()=>{rafOn=false});
+player.addEventListener('seeked',()=>syncLive(player.currentTime));
+function tick(){
+  if(!rafOn)return;
+  syncLive(player.currentTime);
+  requestAnimationFrame(()=>setTimeout(tick,200));
+}
+function syncLive(sec){
+  if(!cData||!cc)return;
+  const secs=cSecs||[];
+  if(!secs.length)return;
+  let idx=0,best=1e9;
+  secs.forEach((t,i)=>{const d=Math.abs(t-sec);if(d<best){best=d;idx=i}});
+  cc.setOption({series:[{markLine:{silent:true,symbol:['none','none'],
+    label:{formatter:'{c}s',color:'#4f6ef7',fontSize:11},
+    lineStyle:{color:'#4f6ef7',width:2},data:[{xAxis:idx}]}}]});
+  document.getElementById('live').innerHTML=
+    `<span class="chipS">当前时刻 <b>${secs[idx]}s</b></span>`+
+    cData.result.students.map((s,i)=>{
+      const p=cMaps[i].get(secs[idx]);
+      return `<span class="chipS">学生#${s.track_id} <b>${p?moodText(p):'未检测到'}</b></span>`;
+    }).join('');
+  drawFaces(secs[idx]);
+}
+/* 把当前时刻的人脸框与情绪画到视频上层 */
+function moodColor(v){
+  return v<=-0.2?'#e2554d':v>=0.2?'#12a67c':'#4f6ef7';
+}
+/* 用词而不是数字描述情绪：类别配上强弱，让老师一眼能看懂 */
+function moodText(p){
+  const v=+p.valence,a=Math.abs(v);
+  if(p.emotion!=='中性')
+    return (a>=0.5?'明显':a>=0.2?'比较':'略带')+p.emotion;
+  if(v<=-0.3) return '情绪偏低';
+  if(v<=-0.12) return '略显低落';
+  if(v>=0.15) return '略显轻松';
+  return '平静专注';
+}
+function drawFaces(t){
+  const cv=document.getElementById('ovl'),g=cv.getContext('2d');
+  const cw=player.clientWidth,ch=player.clientHeight;
+  if(!cw||!ch)return;
+  const dpr=window.devicePixelRatio||1;
+  if(cv.width!==Math.round(cw*dpr)||cv.height!==Math.round(ch*dpr)){
+    cv.width=Math.round(cw*dpr);cv.height=Math.round(ch*dpr);
+    cv.style.width=cw+'px';cv.style.height=ch+'px';
+  }
+  g.setTransform(dpr,0,0,dpr,0,0);
+  g.clearRect(0,0,cw,ch);
+  if(!cData||!player.videoWidth)return;
+  /* 视频默认按 contain 缩放，要把归一化坐标换到画面真正占的那块区域 */
+  const k=Math.min(cw/player.videoWidth,ch/player.videoHeight);
+  const vw=player.videoWidth*k,vh=player.videoHeight*k;
+  const ox=(cw-vw)/2,oy=(ch-vh)/2;
+  g.font='bold 11px system-ui,"Microsoft YaHei",sans-serif';
+  g.textBaseline='top';
+  cData.result.students.forEach((s,i)=>{
+    const p=cMaps[i].get(t);
+    if(!p||!p.box)return;
+    const x=ox+p.box[0]*vw,y=oy+p.box[1]*vh,w=p.box[2]*vw,h=p.box[3]*vh;
+    const c=moodColor(p.valence);
+    g.lineWidth=2;g.strokeStyle=c;
+    g.strokeRect(x,y,w,h);
+    const label=`#${s.track_id} ${moodText(p)}`;
+    const tw=g.measureText(label).width+8;
+    const ly=y-16<oy?y+h+2:y-16;                 // 贴边时标签放到框下方，不画到画面外
+    const lx=Math.max(ox,Math.min(x,ox+vw-tw));
+    g.fillStyle=c;g.fillRect(lx,ly,tw,15);
+    g.fillStyle='#fff';g.fillText(label,lx+4,ly+2);
+  });
+}
+window.addEventListener('resize',()=>{if(cData)drawFaces((cSecs||[])[0])});
+player.addEventListener('loadedmetadata',()=>syncLive(player.currentTime));
+function bindChartSeek(){
+  if(!cc||cc.__seek)return;
+  cc.__seek=true;
+  cc.getZr().on('click',p=>{
+    if(!cData)return;
+    const secs=cSecs||[];
+    if(!secs.length)return;
+    const px=cc.convertFromPixel({seriesIndex:0},[p.offsetX,p.offsetY]);
+    const idx=Math.max(0,Math.min(secs.length-1,Math.round(px[0])));
+    if(player.src){player.currentTime=secs[idx]}
+    syncLive(secs[idx]);
+  });
+}
+
+/* ---------------- 历史 / 状态 ---------------- */
+async function loadHist(){
+  try{
+    const rows=await (await fetch('/api/history')).json();
+    const fmt=r=>`<tr><td>${r.created_at}</td><td>${r.mode==='interview'?'访谈':'课堂'}</td>
+      <td>${r.engine||''}</td><td>${JSON.stringify(r.summary)}</td></tr>`;
+    document.getElementById('hist').innerHTML=rows.length?
+      '<tr><th>时间</th><th>模式</th><th>引擎</th><th>摘要</th></tr>'+rows.map(fmt).join('')
+      :'<tr><td class="note">暂无记录</td></tr>';
+    document.getElementById('miniHist').innerHTML=rows.length?
+      '<tr><th>时间</th><th>模式</th><th>引擎</th></tr>'+rows.slice(0,5).map(r=>
+        `<tr><td>${r.created_at}</td><td>${r.mode==='interview'?'访谈':'课堂'}</td>
+         <td>${r.engine||''}</td></tr>`).join('')
+      :'<tr><td class="note">暂无记录</td></tr>';
+    document.getElementById('kSess').innerText=rows.length;
+    if(rows.length){document.getElementById('kMode').innerText=
+      rows[0].mode==='interview'?'访谈模式':'课堂模式';
+      document.getElementById('kEng').innerText='引擎 '+(rows[0].engine||'')}
+    const als=await (await fetch('/api/alerts')).json();
+    document.getElementById('kAlert').innerText=als.length;
+    document.getElementById('alertHist').innerHTML=als.length?
+      '<tr><th>时间</th><th>对象</th><th>级别</th><th>原因</th></tr>'+als.map(a=>
+        `<tr><td>${a.created_at}</td><td>${/^\d+$/.test(a.subject||'')?('学生#'+a.subject):'受访学生'}</td>
+         <td>${lvTag(a.level)}</td><td>${(a.reasons||[]).join('；')}</td></tr>`).join('')
+      :'<tr><td class="note">暂无记录</td></tr>';
+  }catch(e){}
+}
+(async()=>{
+  try{const p=await (await fetch('/api/ping')).json();
+    document.getElementById('ping').innerText=p.ok?'运行中':'异常'}
+  catch(e){document.getElementById('ping').innerText='未连接'}
+  loadHist();
+})();
+</script>
+</body>
+</html>

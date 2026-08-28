@@ -1,0 +1,186 @@
+{
+  "video": {
+    "video": "test.mp4",
+    "fps": 30.0,
+    "sampled_frames": 36,
+    "faces": 381,
+    "duration_s": 36.0,
+    "wall_s": 6.77,
+    "detect_s": 0.91,
+    "ferplus_s": 3.64,
+    "labels": [
+      "neutral",
+      "happiness",
+      "surprise",
+      "sadness",
+      "anger",
+      "disgust",
+      "fear",
+      "contempt"
+    ]
+  },
+  "variants": [
+    {
+      "variant": "系统当前配置（期望情绪值 + 28px + 5点 + 平滑）",
+      "config": {
+        "valence": "expect",
+        "min_face_px": 28,
+        "min_track_points": 5,
+        "do_smooth": true
+      },
+      "result": {
+        "students": 9,
+        "class_valence": -0.046,
+        "small_faces": 128,
+        "alerts": 1,
+        "alerts_high": 0,
+        "max_drop_overall": 0.168,
+        "mean_volatility": 0.034
+      }
+    },
+    {
+      "variant": "情绪值改回 argmax（第一版做法）",
+      "config": {
+        "valence": "argmax",
+        "min_face_px": 28,
+        "min_track_points": 5,
+        "do_smooth": true
+      },
+      "result": {
+        "students": 9,
+        "class_valence": 0.026,
+        "small_faces": 128,
+        "alerts": 0,
+        "alerts_high": 0,
+        "max_drop_overall": 0.3,
+        "mean_volatility": 0.027
+      }
+    },
+    {
+      "variant": "不过滤小脸（MIN_FACE_PX=0）",
+      "config": {
+        "valence": "expect",
+        "min_face_px": 0,
+        "min_track_points": 5,
+        "do_smooth": true
+      },
+      "result": {
+        "students": 13,
+        "class_valence": -0.055,
+        "small_faces": 0,
+        "alerts": 1,
+        "alerts_high": 0,
+        "max_drop_overall": 0.399,
+        "mean_volatility": 0.04
+      }
+    },
+    {
+      "variant": "小脸阈值 16px",
+      "config": {
+        "valence": "expect",
+        "min_face_px": 16,
+        "min_track_points": 5,
+        "do_smooth": true
+      },
+      "result": {
+        "students": 13,
+        "class_valence": -0.064,
+        "small_faces": 6,
+        "alerts": 1,
+        "alerts_high": 0,
+        "max_drop_overall": 0.399,
+        "mean_volatility": 0.043
+      }
+    },
+    {
+      "variant": "小脸阈值 40px",
+      "config": {
+        "valence": "expect",
+        "min_face_px": 40,
+        "min_track_points": 5,
+        "do_smooth": true
+      },
+      "result": {
+        "students": 3,
+        "class_valence": -0.003,
+        "small_faces": 322,
+        "alerts": 1,
+        "alerts_high": 0,
+        "max_drop_overall": 0.168,
+        "mean_volatility": 0.042
+      }
+    },
+    {
+      "variant": "不过滤碎片轨迹（MIN_TRACK_POINTS=1）",
+      "config": {
+        "valence": "expect",
+        "min_face_px": 28,
+        "min_track_points": 1,
+        "do_smooth": true
+      },
+      "result": {
+        "students": 11,
+        "class_valence": -0.046,
+        "small_faces": 128,
+        "alerts": 1,
+        "alerts_high": 0,
+        "max_drop_overall": 0.168,
+        "mean_volatility": 0.033
+      }
+    },
+    {
+      "variant": "碎片阈值放宽到 3 点",
+      "config": {
+        "valence": "expect",
+        "min_face_px": 28,
+        "min_track_points": 3,
+        "do_smooth": true
+      },
+      "result": {
+        "students": 10,
+        "class_valence": -0.047,
+        "small_faces": 128,
+        "alerts": 1,
+        "alerts_high": 0,
+        "max_drop_overall": 0.168,
+        "mean_volatility": 0.036
+      }
+    },
+    {
+      "variant": "预警前不做 3 点平滑",
+      "config": {
+        "valence": "expect",
+        "min_face_px": 28,
+        "min_track_points": 5,
+        "do_smooth": false
+      },
+      "result": {
+        "students": 9,
+        "class_valence": -0.044,
+        "small_faces": 128,
+        "alerts": 1,
+        "alerts_high": 0,
+        "max_drop_overall": 0.419,
+        "mean_volatility": 0.088
+      }
+    },
+    {
+      "variant": "第一版整体配置（argmax + 不过滤 + 不平滑）",
+      "config": {
+        "valence": "argmax",
+        "min_face_px": 0,
+        "min_track_points": 1,
+        "do_smooth": false
+      },
+      "result": {
+        "students": 15,
+        "class_valence": 0.021,
+        "small_faces": 0,
+        "alerts": 6,
+        "alerts_high": 0,
+        "max_drop_overall": 0.9,
+        "mean_volatility": 0.058
+      }
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "video": "test.mp4",
+  "resolution": "1346x710",
+  "duration_s": 36.0,
+  "sampled_frames": 36,
+  "faces_processed": 381,
+  "wall_s": 6.85,
+  "realtime_factor": 0.191,
+  "sampled_fps": 5.25,
+  "stages": {
+    "decode": {
+      "seconds": 2.235,
+      "share": 0.3263,
+      "ms_per_call": 62.073
+    },
+    "detect": {
+      "seconds": 0.952,
+      "share": 0.139,
+      "ms_per_call": 26.448
+    },
+    "preprocess": {
+      "seconds": 0.011,
+      "share": 0.0016,
+      "ms_per_call": 0.028
+    },
+    "ferplus": {
+      "seconds": 3.651,
+      "share": 0.5331,
+      "ms_per_call": 9.583
+    }
+  }
+}

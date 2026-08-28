@@ -1,0 +1,5 @@
+﻿stage,seconds,share,ms_per_call
+decode,2.235,0.3263,62.073
+detect,0.952,0.139,26.448
+preprocess,0.011,0.0016,0.028
+ferplus,3.651,0.5331,9.583

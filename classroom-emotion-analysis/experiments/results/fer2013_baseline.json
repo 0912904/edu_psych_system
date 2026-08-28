@@ -1,0 +1,137 @@
+{
+  "n_samples": 7178,
+  "accuracy": 0.5713,
+  "macro_f1": 0.4805,
+  "contempt_pred_ratio": 0.0,
+  "mean_confidence": 0.7893,
+  "equalize_hist": true,
+  "per_class": {
+    "angry": {
+      "precision": 0.6678,
+      "recall": 0.4196,
+      "f1": 0.5154,
+      "support": 958
+    },
+    "disgusted": {
+      "precision": 0.4314,
+      "recall": 0.1982,
+      "f1": 0.2716,
+      "support": 111
+    },
+    "fearful": {
+      "precision": 0.6804,
+      "recall": 0.0645,
+      "f1": 0.1178,
+      "support": 1024
+    },
+    "happy": {
+      "precision": 0.8462,
+      "recall": 0.8867,
+      "f1": 0.866,
+      "support": 1774
+    },
+    "neutral": {
+      "precision": 0.367,
+      "recall": 0.8686,
+      "f1": 0.516,
+      "support": 1233
+    },
+    "sad": {
+      "precision": 0.4751,
+      "recall": 0.3288,
+      "f1": 0.3886,
+      "support": 1247
+    },
+    "surprised": {
+      "precision": 0.7069,
+      "recall": 0.6703,
+      "f1": 0.6881,
+      "support": 831
+    }
+  },
+  "confusion_matrix": {
+    "rows_true": [
+      "angry",
+      "disgusted",
+      "fearful",
+      "happy",
+      "neutral",
+      "sad",
+      "surprised"
+    ],
+    "cols_pred": [
+      "angry",
+      "disgusted",
+      "fearful",
+      "happy",
+      "neutral",
+      "sad",
+      "surprised"
+    ],
+    "matrix": [
+      [
+        402,
+        15,
+        9,
+        51,
+        382,
+        69,
+        30
+      ],
+      [
+        34,
+        22,
+        0,
+        5,
+        21,
+        28,
+        1
+      ],
+      [
+        98,
+        9,
+        66,
+        39,
+        414,
+        254,
+        144
+      ],
+      [
+        6,
+        1,
+        2,
+        1573,
+        140,
+        18,
+        34
+      ],
+      [
+        8,
+        1,
+        0,
+        72,
+        1071,
+        72,
+        9
+      ],
+      [
+        37,
+        3,
+        5,
+        45,
+        734,
+        410,
+        13
+      ],
+      [
+        17,
+        0,
+        15,
+        74,
+        156,
+        12,
+        557
+      ]
+    ]
+  }
+}

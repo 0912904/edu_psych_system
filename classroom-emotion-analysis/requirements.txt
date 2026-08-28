@@ -1,0 +1,5 @@
+# Python 3.8+
+# Web 后端只用标准库 http.server + sqlite3，不需要 Flask/Django。
+opencv-python>=4.8        # YuNet 人脸检测（FaceDetectorYN）+ ONNX 推理（dnn）
+numpy>=1.21               # 实验脚本的指标计算
+matplotlib>=3.5           # 实验脚本出图（仅 experiments/ 需要）
