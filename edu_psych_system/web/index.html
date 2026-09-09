@@ -7,7 +7,7 @@
 <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
 <style>
 :root{
-  --paper:#f6f1e7; --paper-2:#fbf8f1; --ink:#2b2d3a; --ink-2:#6b6a72; --line:rgba(43,45,58,.22);
+  --paper:#f6f1e7; --paper-2:#fbf8f1; --ink:#2b2d3a; --ink-2:#5d5c66; --line:rgba(43,45,58,.22);
   --brand:#3d6fb4; --accent:#e3a63a; --rose:#d86b5a; --sage:#6a9c7f;
   --ok:#3f8f6b; --mild:#d08a1f; --warn:#cf5344;
   --hand:"KaiTi","STKaiti","Kaiti SC","楷体","Noto Serif CJK SC","Songti SC",serif;
@@ -99,7 +99,7 @@ main{padding:26px 32px 40px;max-width:1320px}
 .kpi:nth-child(4){background:#e2ebf7;--tilt:1deg;animation-delay:-4.5s}
 .kpi::after{content:"";position:absolute;right:-18px;bottom:-22px;width:70px;height:70px;
   border:2px dashed rgba(43,45,58,.18);border-radius:50%}
-.kpi:hover{animation-play-state:paused}
+.kpi:hover,.view.on .kpis>*:hover{animation-play-state:paused,paused}
 .kpi label{font-size:11.5px;color:var(--ink-2)}
 .kpi b{display:block;font-size:28px;margin-top:6px;letter-spacing:.5px;font-family:var(--hand);color:var(--ink)}
 .kpi small{font-size:11px;color:var(--ink-2)}
@@ -175,7 +175,8 @@ video{width:100%;border-radius:8px;background:#2b2d3a;display:block;max-height:3
   background-size:220% 100%;animation:sweep 1.3s linear infinite}
 @keyframes sweep{from{background-position:120% 0}to{background-position:-40% 0}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
-@media(max-width:980px){.app{grid-template-columns:1fr}aside{position:static;height:auto}
+@media(max-width:980px){.app{grid-template-columns:1fr}aside{position:static;height:auto;border-right:none;border-bottom:2px solid var(--ink);box-shadow:none}
+  .sidefoot{position:static;margin-top:14px}
   .grid2{grid-template-columns:1fr}.kpis{grid-template-columns:repeat(2,1fr)}main{padding:18px}}
 </style>
 </head>
