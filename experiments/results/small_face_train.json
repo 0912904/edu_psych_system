@@ -1,0 +1,352 @@
+{
+  "epochs": 20,
+  "seeds": [
+    0,
+    1
+  ],
+  "n_train": 28709,
+  "n_test": 7178,
+  "sizes": [
+    12,
+    16,
+    20,
+    24,
+    28,
+    32,
+    48
+  ],
+  "summary": {
+    "常规增广": {
+      "12": {
+        "acc_mean": 0.30100000000000005,
+        "acc_std": 0.004799999999999999,
+        "f1_mean": 0.2049,
+        "f1_std": 0.0014000000000000123,
+        "neutral_pred_ratio": 0.0566
+      },
+      "16": {
+        "acc_mean": 0.36445000000000005,
+        "acc_std": 0.003250000000000003,
+        "f1_mean": 0.292,
+        "f1_std": 0.0010000000000000009,
+        "neutral_pred_ratio": 0.04395
+      },
+      "20": {
+        "acc_mean": 0.42810000000000004,
+        "acc_std": 0.0011000000000000176,
+        "f1_mean": 0.35575,
+        "f1_std": 0.0005499999999999949,
+        "neutral_pred_ratio": 0.04535
+      },
+      "24": {
+        "acc_mean": 0.48555000000000004,
+        "acc_std": 0.012250000000000011,
+        "f1_mean": 0.41565,
+        "f1_std": 0.013649999999999995,
+        "neutral_pred_ratio": 0.05405
+      },
+      "28": {
+        "acc_mean": 0.53385,
+        "acc_std": 0.004049999999999998,
+        "f1_mean": 0.4798,
+        "f1_std": 0.003400000000000014,
+        "neutral_pred_ratio": 0.07450000000000001
+      },
+      "32": {
+        "acc_mean": 0.57155,
+        "acc_std": 0.003950000000000009,
+        "f1_mean": 0.5298499999999999,
+        "f1_std": 0.0025499999999999967,
+        "neutral_pred_ratio": 0.086
+      },
+      "48": {
+        "acc_mean": 0.67345,
+        "acc_std": 0.0011499999999999844,
+        "f1_mean": 0.6438,
+        "f1_std": 0.0,
+        "neutral_pred_ratio": 0.17735
+      }
+    },
+    "常规+多尺度退化": {
+      "12": {
+        "acc_mean": 0.48585,
+        "acc_std": 0.0007500000000000007,
+        "f1_mean": 0.4075,
+        "f1_std": 0.0021000000000000185,
+        "neutral_pred_ratio": 0.17065000000000002
+      },
+      "16": {
+        "acc_mean": 0.5597000000000001,
+        "acc_std": 0.0005000000000000004,
+        "f1_mean": 0.49785,
+        "f1_std": 0.00134999999999999,
+        "neutral_pred_ratio": 0.18745
+      },
+      "20": {
+        "acc_mean": 0.604,
+        "acc_std": 0.006099999999999994,
+        "f1_mean": 0.5541,
+        "f1_std": 0.0049000000000000155,
+        "neutral_pred_ratio": 0.18585000000000002
+      },
+      "24": {
+        "acc_mean": 0.62645,
+        "acc_std": 4.999999999999449e-05,
+        "f1_mean": 0.5811999999999999,
+        "f1_std": 0.0024000000000000132,
+        "neutral_pred_ratio": 0.1819
+      },
+      "28": {
+        "acc_mean": 0.6355,
+        "acc_std": 0.0012000000000000344,
+        "f1_mean": 0.5945499999999999,
+        "f1_std": 0.00045000000000000595,
+        "neutral_pred_ratio": 0.18764999999999998
+      },
+      "32": {
+        "acc_mean": 0.64595,
+        "acc_std": 0.0013500000000000179,
+        "f1_mean": 0.60685,
+        "f1_std": 0.004249999999999976,
+        "neutral_pred_ratio": 0.1896
+      },
+      "48": {
+        "acc_mean": 0.659,
+        "acc_std": 0.0011999999999999789,
+        "f1_mean": 0.6244000000000001,
+        "f1_std": 0.0017999999999999683,
+        "neutral_pred_ratio": 0.19085
+      }
+    }
+  },
+  "runs": {
+    "常规增广": [
+      {
+        "12": {
+          "accuracy": 0.3058,
+          "macro_f1": 0.2035,
+          "neutral_pred_ratio": 0.0295
+        },
+        "16": {
+          "accuracy": 0.3612,
+          "macro_f1": 0.293,
+          "neutral_pred_ratio": 0.0329
+        },
+        "20": {
+          "accuracy": 0.427,
+          "macro_f1": 0.3563,
+          "neutral_pred_ratio": 0.044
+        },
+        "24": {
+          "accuracy": 0.4978,
+          "macro_f1": 0.4293,
+          "neutral_pred_ratio": 0.0606
+        },
+        "28": {
+          "accuracy": 0.5379,
+          "macro_f1": 0.4832,
+          "neutral_pred_ratio": 0.08
+        },
+        "32": {
+          "accuracy": 0.5755,
+          "macro_f1": 0.5324,
+          "neutral_pred_ratio": 0.0879
+        },
+        "48": {
+          "accuracy": 0.6723,
+          "macro_f1": 0.6438,
+          "neutral_pred_ratio": 0.1764
+        }
+      },
+      {
+        "12": {
+          "accuracy": 0.2962,
+          "macro_f1": 0.2063,
+          "neutral_pred_ratio": 0.0837
+        },
+        "16": {
+          "accuracy": 0.3677,
+          "macro_f1": 0.291,
+          "neutral_pred_ratio": 0.055
+        },
+        "20": {
+          "accuracy": 0.4292,
+          "macro_f1": 0.3552,
+          "neutral_pred_ratio": 0.0467
+        },
+        "24": {
+          "accuracy": 0.4733,
+          "macro_f1": 0.402,
+          "neutral_pred_ratio": 0.0475
+        },
+        "28": {
+          "accuracy": 0.5298,
+          "macro_f1": 0.4764,
+          "neutral_pred_ratio": 0.069
+        },
+        "32": {
+          "accuracy": 0.5676,
+          "macro_f1": 0.5273,
+          "neutral_pred_ratio": 0.0841
+        },
+        "48": {
+          "accuracy": 0.6746,
+          "macro_f1": 0.6438,
+          "neutral_pred_ratio": 0.1783
+        }
+      }
+    ],
+    "常规+多尺度退化": [
+      {
+        "12": {
+          "accuracy": 0.4866,
+          "macro_f1": 0.4096,
+          "neutral_pred_ratio": 0.168
+        },
+        "16": {
+          "accuracy": 0.5602,
+          "macro_f1": 0.4965,
+          "neutral_pred_ratio": 0.1804
+        },
+        "20": {
+          "accuracy": 0.5979,
+          "macro_f1": 0.5492,
+          "neutral_pred_ratio": 0.1838
+        },
+        "24": {
+          "accuracy": 0.6265,
+          "macro_f1": 0.5788,
+          "neutral_pred_ratio": 0.1743
+        },
+        "28": {
+          "accuracy": 0.6343,
+          "macro_f1": 0.5941,
+          "neutral_pred_ratio": 0.1815
+        },
+        "32": {
+          "accuracy": 0.6446,
+          "macro_f1": 0.6026,
+          "neutral_pred_ratio": 0.1821
+        },
+        "48": {
+          "accuracy": 0.6578,
+          "macro_f1": 0.6226,
+          "neutral_pred_ratio": 0.1861
+        }
+      },
+      {
+        "12": {
+          "accuracy": 0.4851,
+          "macro_f1": 0.4054,
+          "neutral_pred_ratio": 0.1733
+        },
+        "16": {
+          "accuracy": 0.5592,
+          "macro_f1": 0.4992,
+          "neutral_pred_ratio": 0.1945
+        },
+        "20": {
+          "accuracy": 0.6101,
+          "macro_f1": 0.559,
+          "neutral_pred_ratio": 0.1879
+        },
+        "24": {
+          "accuracy": 0.6264,
+          "macro_f1": 0.5836,
+          "neutral_pred_ratio": 0.1895
+        },
+        "28": {
+          "accuracy": 0.6367,
+          "macro_f1": 0.595,
+          "neutral_pred_ratio": 0.1938
+        },
+        "32": {
+          "accuracy": 0.6473,
+          "macro_f1": 0.6111,
+          "neutral_pred_ratio": 0.1971
+        },
+        "48": {
+          "accuracy": 0.6602,
+          "macro_f1": 0.6262,
+          "neutral_pred_ratio": 0.1956
+        }
+      }
+    ]
+  },
+  "retention_vs_48px": {
+    "常规增广": {
+      "12": 0.44695226074690036,
+      "16": 0.5411686093993616,
+      "20": 0.6356819362981663,
+      "24": 0.7209889375603238,
+      "28": 0.7927091840522682,
+      "32": 0.8486895834880095,
+      "48": 1.0
+    },
+    "常规+多尺度退化": {
+      "12": 0.7372534142640363,
+      "16": 0.8493171471927163,
+      "20": 0.9165402124430956,
+      "24": 0.9506069802731411,
+      "28": 0.964339908952959,
+      "32": 0.9801972685887709,
+      "48": 1.0
+    }
+  },
+  "ferplus_reference": {
+    "12": {
+      "face_px": 12,
+      "accuracy": 0.2641,
+      "macro_f1": 0.1442,
+      "neutral_pred_ratio": 0.8007
+    },
+    "16": {
+      "face_px": 16,
+      "accuracy": 0.3552,
+      "macro_f1": 0.2299,
+      "neutral_pred_ratio": 0.6812
+    },
+    "20": {
+      "face_px": 20,
+      "accuracy": 0.4204,
+      "macro_f1": 0.29,
+      "neutral_pred_ratio": 0.6009
+    },
+    "24": {
+      "face_px": 24,
+      "accuracy": 0.4902,
+      "macro_f1": 0.3893,
+      "neutral_pred_ratio": 0.5194
+    },
+    "28": {
+      "face_px": 28,
+      "accuracy": 0.5111,
+      "macro_f1": 0.4033,
+      "neutral_pred_ratio": 0.4998
+    },
+    "32": {
+      "face_px": 32,
+      "accuracy": 0.5311,
+      "macro_f1": 0.4199,
+      "neutral_pred_ratio": 0.4781
+    },
+    "40": {
+      "face_px": 40,
+      "accuracy": 0.5583,
+      "macro_f1": 0.4612,
+      "neutral_pred_ratio": 0.4354
+    },
+    "48": {
+      "face_px": 48,
+      "accuracy": 0.5692,
+      "macro_f1": 0.4659,
+      "neutral_pred_ratio": 0.4066
+    },
+    "64": {
+      "face_px": 64,
+      "accuracy": 0.5717,
+      "macro_f1": 0.4661,
+      "neutral_pred_ratio": 0.4104
+    }
+  }
+}

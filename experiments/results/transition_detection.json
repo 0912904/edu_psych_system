@@ -1,0 +1,199 @@
+{
+  "synthetic": {
+    "n_sequences": 400,
+    "seq_len": 60,
+    "sigma": 0.04245319702581166,
+    "tolerance_s": 2,
+    "methods": [
+      {
+        "method": "骤降规则 τ=0.8（现有）",
+        "precision": 0.3625,
+        "recall": 0.3625,
+        "f1": 0.3625
+      },
+      {
+        "method": "骤降规则 τ=0.3",
+        "precision": 0.37375,
+        "recall": 0.36,
+        "f1": 0.36416666666666664
+      },
+      {
+        "method": "CUSUM",
+        "precision": 0.3710327380952381,
+        "recall": 0.69,
+        "f1": 0.45548611111111115
+      },
+      {
+        "method": "二分段变点(BIC)",
+        "precision": 0.9633333333333334,
+        "recall": 0.94375,
+        "f1": 0.9473333333333332
+      }
+    ],
+    "sigma_sweep": [
+      {
+        "sigma": 0.04,
+        "骤降规则 τ=0.8（现有）": 0.315,
+        "骤降规则 τ=0.3": 0.33,
+        "CUSUM": 0.47253571428571434,
+        "二分段变点(BIC)": 0.9658333333333334
+      },
+      {
+        "sigma": 0.08,
+        "骤降规则 τ=0.8（现有）": 0.315,
+        "骤降规则 τ=0.3": 0.3283333333333333,
+        "CUSUM": 0.47236507936507943,
+        "二分段变点(BIC)": 0.9521666666666667
+      },
+      {
+        "sigma": 0.12,
+        "骤降规则 τ=0.8（现有）": 0.315,
+        "骤降规则 τ=0.3": 0.3125,
+        "CUSUM": 0.4438928571428572,
+        "二分段变点(BIC)": 0.9431666666666666
+      },
+      {
+        "sigma": 0.16,
+        "骤降规则 τ=0.8（现有）": 0.315,
+        "骤降规则 τ=0.3": 0.3308333333333333,
+        "CUSUM": 0.40939285714285717,
+        "二分段变点(BIC)": 0.8985
+      },
+      {
+        "sigma": 0.2,
+        "骤降规则 τ=0.8（现有）": 0.315,
+        "骤降规则 τ=0.3": 0.37266666666666665,
+        "CUSUM": 0.32095238095238093,
+        "二分段变点(BIC)": 0.8406666666666667
+      }
+    ]
+  },
+  "real_video": {
+    "video": {
+      "video": "test.mp4",
+      "fps": 30.0,
+      "sampled_frames": 36,
+      "faces": 381,
+      "duration_s": 36.0,
+      "wall_s": 12.92,
+      "detect_s": 2.91,
+      "ferplus_s": 5.39,
+      "labels": [
+        "neutral",
+        "happiness",
+        "surprise",
+        "sadness",
+        "anger",
+        "disgust",
+        "fear",
+        "contempt"
+      ]
+    },
+    "tracks": [
+      {
+        "track_id": 1,
+        "n": 34,
+        "drop_rule_events": 0,
+        "cusum_events": 3,
+        "binseg_events": []
+      },
+      {
+        "track_id": 2,
+        "n": 36,
+        "drop_rule_events": 0,
+        "cusum_events": 5,
+        "binseg_events": [
+          {
+            "t": 33.0,
+            "from": -0.172,
+            "to": 0.238,
+            "desc": "消极→积极"
+          }
+        ]
+      },
+      {
+        "track_id": 3,
+        "n": 15,
+        "drop_rule_events": 0,
+        "cusum_events": 0,
+        "binseg_events": [
+          {
+            "t": 25.0,
+            "from": 0.498,
+            "to": 0.192,
+            "desc": "积极→积极"
+          }
+        ]
+      },
+      {
+        "track_id": 6,
+        "n": 18,
+        "drop_rule_events": 0,
+        "cusum_events": 2,
+        "binseg_events": []
+      },
+      {
+        "track_id": 7,
+        "n": 30,
+        "drop_rule_events": 0,
+        "cusum_events": 4,
+        "binseg_events": []
+      },
+      {
+        "track_id": 8,
+        "n": 19,
+        "drop_rule_events": 0,
+        "cusum_events": 2,
+        "binseg_events": []
+      },
+      {
+        "track_id": 9,
+        "n": 23,
+        "drop_rule_events": 0,
+        "cusum_events": 1,
+        "binseg_events": [
+          {
+            "t": 27.0,
+            "from": -0.363,
+            "to": -0.194,
+            "desc": "消极→消极"
+          }
+        ]
+      },
+      {
+        "track_id": 11,
+        "n": 6,
+        "drop_rule_events": 0,
+        "cusum_events": 0,
+        "binseg_events": []
+      },
+      {
+        "track_id": 12,
+        "n": 23,
+        "drop_rule_events": 0,
+        "cusum_events": 3,
+        "binseg_events": [
+          {
+            "t": 6.0,
+            "from": 0.203,
+            "to": 0.286,
+            "desc": "积极→积极"
+          },
+          {
+            "t": 10.0,
+            "from": 0.286,
+            "to": -0.029,
+            "desc": "积极→中性"
+          }
+        ]
+      },
+      {
+        "track_id": 13,
+        "n": 19,
+        "drop_rule_events": 0,
+        "cusum_events": 1,
+        "binseg_events": []
+      }
+    ]
+  }
+}

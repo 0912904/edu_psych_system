@@ -1,0 +1,17 @@
+﻿label,task,model,macro_f1,macro_f1_std,bacc,acc,majority_macro_f1,majority_bacc,majority_acc
+Boredom,4class,softmax,0.2719,0.0034,0.347,0.3246,0.1587,0.25,0.4649
+Boredom,4class,mlp64,0.3076,0.005,0.3524,0.379,0.1587,0.25,0.4649
+Boredom,binary,softmax,0.5648,0.003,0.57,0.5804,0.3486,0.5,0.5351
+Boredom,binary,mlp64,0.581,0.0103,0.5811,0.5852,0.3486,0.5,0.5351
+Engagement,4class,softmax,0.2347,0.0058,0.3172,0.3509,0.1666,0.25,0.4997
+Engagement,4class,mlp64,0.2768,0.0064,0.2992,0.4426,0.1666,0.25,0.4997
+Engagement,binary,softmax,0.5056,0.0074,0.6609,0.7264,0.4874,0.5,0.9507
+Engagement,binary,mlp64,0.5342,0.0023,0.5955,0.8319,0.4874,0.5,0.9507
+Confusion,4class,softmax,0.2745,0.0032,0.3275,0.4635,0.2017,0.25,0.6761
+Confusion,4class,mlp64,0.277,0.0045,0.295,0.4678,0.2017,0.25,0.6761
+Confusion,binary,softmax,0.5808,0.0025,0.5879,0.6139,0.4034,0.5,0.6761
+Confusion,binary,mlp64,0.5903,0.0049,0.5936,0.6315,0.4034,0.5,0.6761
+Frustration,4class,softmax,0.2556,0.0067,0.3083,0.5092,0.2192,0.25,0.7806
+Frustration,4class,mlp64,0.2673,0.0086,0.2857,0.5777,0.2192,0.25,0.7806
+Frustration,binary,softmax,0.5809,0.0064,0.6109,0.6558,0.4384,0.5,0.7806
+Frustration,binary,mlp64,0.5668,0.0191,0.5735,0.6835,0.4384,0.5,0.7806
