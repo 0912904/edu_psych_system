@@ -1,0 +1,43 @@
+{
+  "n_samples": 2393,
+  "input_size_fixed": 64,
+  "note": "FERplus 全连接层维度写死 64x64，输入尺寸不可调",
+  "rows": [
+    {
+      "interpolation": "INTER_LINEAR",
+      "equalize_hist": true,
+      "accuracy": 0.5692,
+      "macro_f1": 0.4659
+    },
+    {
+      "interpolation": "INTER_LINEAR",
+      "equalize_hist": false,
+      "accuracy": 0.5704,
+      "macro_f1": 0.4702
+    },
+    {
+      "interpolation": "INTER_AREA",
+      "equalize_hist": true,
+      "accuracy": 0.5717,
+      "macro_f1": 0.4661
+    },
+    {
+      "interpolation": "INTER_AREA",
+      "equalize_hist": false,
+      "accuracy": 0.5746,
+      "macro_f1": 0.4795
+    },
+    {
+      "interpolation": "INTER_CUBIC",
+      "equalize_hist": true,
+      "accuracy": 0.5733,
+      "macro_f1": 0.4619
+    },
+    {
+      "interpolation": "INTER_CUBIC",
+      "equalize_hist": false,
+      "accuracy": 0.5821,
+      "macro_f1": 0.4941
+    }
+  ]
+}

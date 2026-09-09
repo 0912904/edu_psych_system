@@ -1,0 +1,168 @@
+{
+  "video": {
+    "video": "test.mp4",
+    "fps": 30.0,
+    "sampled_frames": 36,
+    "faces": 381,
+    "duration_s": 36.0,
+    "wall_s": 12.92,
+    "detect_s": 2.91,
+    "ferplus_s": 5.39,
+    "labels": [
+      "neutral",
+      "happiness",
+      "surprise",
+      "sadness",
+      "anger",
+      "disgust",
+      "fear",
+      "contempt"
+    ]
+  },
+  "n_students": 10,
+  "n_obs": 223,
+  "pose_stats": {
+    "abs_yaw_median": 0.04838306921494118,
+    "abs_yaw_p90": 0.14686671661687323,
+    "pitch_median": 0.5671641791044779
+  },
+  "q1_pose_vs_uncertainty": {
+    "spearman_absyaw_entropy": 0.03844684652374677,
+    "spearman_absyaw_pneutral": 0.012555367656554042,
+    "spearman_pitchdev_entropy": 0.14730357359281124,
+    "spearman_pitchdev_pneutral": -0.14838735683212015
+  },
+  "q1_bins": [
+    {
+      "bin": "正脸 |yaw|<0.15",
+      "n": 201,
+      "mean_entropy": 0.6243473326949484,
+      "mean_p_neutral": 0.7722595024875621,
+      "mean_valence": -0.06868769651741294
+    },
+    {
+      "bin": "轻偏 0.15~0.35",
+      "n": 20,
+      "mean_entropy": 0.5925365165140593,
+      "mean_p_neutral": 0.8452710000000001,
+      "mean_valence": -0.06717920000000001
+    },
+    {
+      "bin": "明显偏 >0.35",
+      "n": 2,
+      "mean_entropy": 0.6480904727166319,
+      "mean_p_neutral": 0.754035,
+      "mean_valence": 0.1138285
+    }
+  ],
+  "q2_expression_vs_pose": {
+    "spearman_valence_absyaw": 0.16261645026192814,
+    "spearman_valence_pitchdev": -0.05897445331301833
+  },
+  "q3_fusion": {
+    "kendall_tau": 0.4222222222222222,
+    "rank_changed": 7
+  },
+  "students": [
+    {
+      "track_id": 1,
+      "n": 34,
+      "mean_valence": -0.037568176470588244,
+      "turned_ratio": 0.0,
+      "head_dev_ratio": 0.0,
+      "attention_proxy": 0.9581480998936286,
+      "engagement_fused": 0.7196820058291672,
+      "engagement_expr_only": 0.48121591176470585
+    },
+    {
+      "track_id": 2,
+      "n": 36,
+      "mean_valence": -0.13810233333333333,
+      "turned_ratio": 0.0,
+      "head_dev_ratio": 0.0,
+      "attention_proxy": 0.9002442003587934,
+      "engagement_fused": 0.6655965168460634,
+      "engagement_expr_only": 0.4309488333333333
+    },
+    {
+      "track_id": 3,
+      "n": 15,
+      "mean_valence": 0.29376026666666666,
+      "turned_ratio": 0.0,
+      "head_dev_ratio": 0.0,
+      "attention_proxy": 0.915382299955486,
+      "engagement_fused": 0.7811312166444097,
+      "engagement_expr_only": 0.6468801333333334
+    },
+    {
+      "track_id": 6,
+      "n": 18,
+      "mean_valence": -0.09646338888888889,
+      "turned_ratio": 0.0,
+      "head_dev_ratio": 0.0,
+      "attention_proxy": 0.8654860140328896,
+      "engagement_fused": 0.6586271597942226,
+      "engagement_expr_only": 0.4517683055555556
+    },
+    {
+      "track_id": 7,
+      "n": 30,
+      "mean_valence": -0.11992733333333333,
+      "turned_ratio": 0.0,
+      "head_dev_ratio": 0.0,
+      "attention_proxy": 0.9337572717090089,
+      "engagement_fused": 0.686896802521171,
+      "engagement_expr_only": 0.44003633333333336
+    },
+    {
+      "track_id": 8,
+      "n": 19,
+      "mean_valence": -0.0044710000000000045,
+      "turned_ratio": 0.0,
+      "head_dev_ratio": 0.0,
+      "attention_proxy": 0.8070190864223126,
+      "engagement_fused": 0.6523917932111563,
+      "engagement_expr_only": 0.49776449999999994
+    },
+    {
+      "track_id": 9,
+      "n": 23,
+      "mean_valence": -0.34135726086956525,
+      "turned_ratio": 0.0,
+      "head_dev_ratio": 0.0,
+      "attention_proxy": 0.9297541493568638,
+      "engagement_fused": 0.6295377594610406,
+      "engagement_expr_only": 0.3293213695652174
+    },
+    {
+      "track_id": 11,
+      "n": 6,
+      "mean_valence": 0.015366333333333324,
+      "turned_ratio": 0.0,
+      "head_dev_ratio": 0.0,
+      "attention_proxy": 0.8202386482824217,
+      "engagement_fused": 0.6639609074745442,
+      "engagement_expr_only": 0.5076831666666667
+    },
+    {
+      "track_id": 12,
+      "n": 23,
+      "mean_valence": 0.05603647826086957,
+      "turned_ratio": 0.043478260869565216,
+      "head_dev_ratio": 0.0,
+      "attention_proxy": 0.9001092668759617,
+      "engagement_fused": 0.714063753003198,
+      "engagement_expr_only": 0.5280182391304347
+    },
+    {
+      "track_id": 13,
+      "n": 19,
+      "mean_valence": -0.06264557894736843,
+      "turned_ratio": 0.05263157894736842,
+      "head_dev_ratio": 0.0,
+      "attention_proxy": 0.82462094110857,
+      "engagement_fused": 0.6466490758174429,
+      "engagement_expr_only": 0.4686772105263158
+    }
+  ]
+}
