@@ -5,6 +5,9 @@
 def classroom_advice(class_stats, alerts):
     """班级层面教学与关怀建议（规则模板）。"""
     tips = []
+    if not class_stats.get("n_students"):
+        return ["本次视频未识别到可分析的学生（人脸未检出或过小、轨迹过短），"
+                "无法给出班级情绪结论；建议使用画面更清晰、人脸更大的正面视频。"]
     cv = class_stats.get("class_valence", 0)
     if cv < -0.15:
         tips.append("班级整体情绪偏低，建议调整教学节奏，插入互动或小组活动提振氛围。")

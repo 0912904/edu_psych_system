@@ -415,21 +415,25 @@ async function runDemo(){
 function renderClass(r){
   cData=r;
   const eng=r.result.engine,sim=eng==='simulated';
-  const nt=document.getElementById('noticeC');
-  if(r.notice||sim){nt.classList.add('show');
-    document.getElementById('noticeTxt').innerText=r.notice||
-      '当前为模拟数据，仅供界面联调与演示，不代表真实分析结果。';}
-  else nt.classList.remove('show');
   const cs=r.result.class_stats||{};
-  document.getElementById('cN').innerText=cs.n_students??'–';
+  const empty=!(r.result.students||[]).length;
+  const nt=document.getElementById('noticeC');
+  if(r.notice||sim||empty){nt.classList.add('show');
+    document.getElementById('noticeTxt').innerText=r.notice||(sim?
+      '当前为模拟数据，仅供界面联调与演示，不代表真实分析结果。':
+      '本次视频未识别到可分析的学生（人脸未检出或过小'+
+      (cs.small_face_samples?'，其中 '+cs.small_face_samples+' 次人脸过小':'')+
+      '），以下统计为空，不代表班级情绪平稳。');}
+  else nt.classList.remove('show');
+  document.getElementById('cN').innerText=cs.n_students??0;
   document.getElementById('cSmall').innerText=cs.small_face_samples
     ?'匿名编号；另有 '+cs.small_face_samples+' 次人脸过小未参与识别'
     :'匿名编号';
-  document.getElementById('cMean').innerText=
+  document.getElementById('cMean').innerText=empty?'无数据':
     moodText({emotion:'中性',valence:cs.class_valence||0});
-  document.getElementById('cMeanNum').innerText=
+  document.getElementById('cMeanNum').innerText=empty?'未识别到学生':
     '均值 '+(cs.class_valence??0).toFixed(2)+'（范围 -1 ~ 1）';
-  document.getElementById('cNeg').innerText=pct(cs.neg_student_ratio||0);
+  document.getElementById('cNeg').innerText=empty?'–':pct(cs.neg_student_ratio||0);
   document.getElementById('cAl').innerText=(r.alerts||[]).length;
   document.getElementById('cEng').innerText='引擎 '+eng+(sim?'（模拟）':'');
   cc=cc||echarts.init(document.getElementById('chartC'));
@@ -459,6 +463,7 @@ function renderClass(r){
   let html=al.length?'<table><tr><th>学生</th><th>级别</th><th>触发原因</th></tr>'+
     al.map(a=>`<tr><td>学生#${a.track_id}</td><td>${lvTag(a.level)}</td>
       <td>${a.reasons.join('；')}</td></tr>`).join('')+'</table>'
+    :empty?'<span class="tag mild">未识别到学生，无预警数据</span>'
     :'<span class="tag ok">本次没有学生触发预警</span>';
   html+='<ul class="advice">'+(r.advice||[]).map(x=>`<li>${x}</li>`).join('')+'</ul>';
   document.getElementById('alertC').innerHTML=html;
